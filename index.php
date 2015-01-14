@@ -12,13 +12,14 @@ and open the template in the editor.
     <body>
         <?php
         // put your code here
-         $link = mysqli_connect("localhost", "root", "ausias");
-         mysqli_select_db($link, "paises");
+         require 'config.php';
+         $link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD);
+         mysqli_select_db($link, $DB_NAME);
          $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes
          $lista = mysqli_query($link, "SELECT * FROM `ciudades`");
          $numfilas = mysqli_num_rows($lista);
          echo "La consulta ha devuelto ".$numfilas. " filas<br>";
-         $filaspagina = 1;
+         $filaspagina = 2;
          mysqli_data_seek($lista, 0);
          $sigue = True;
          $n = 0;
