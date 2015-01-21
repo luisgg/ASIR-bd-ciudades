@@ -12,15 +12,14 @@ and open the template in the editor.
     <body>
         <?php
         // funciones del programa
-        function muestraciudades($primerafila,$filaspagina){
+        function muestraciudades($inicial,$filaspagina){
             require 'config.php';
             $link = mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD);
             mysqli_select_db($link, $DB_NAME);
             $link->query("SET NAMES 'utf8'"); //Para que se muestren las tildes
             $lista = mysqli_query($link, "SELECT * FROM `ciudades`");
             $numfilas = mysqli_num_rows($lista);
-            echo "La consulta ha devuelto ".$numfilas. " filas<br>";
-            mysqli_data_seek($lista, $primerafila);
+            mysqli_data_seek($lista, $inicial);
             $sigue = True;
             $n = 0;
             while ($sigue) {
@@ -36,11 +35,13 @@ and open the template in the editor.
                 }
                 if ($n == $filaspagina) {
                     echo "<hr>";
+                    $sigue = False;
                     $n = 0;
                 }
             }
 
             mysqli_close($link);
+            return $numfilas;
         }
         
         // Programa principal
@@ -50,7 +51,14 @@ and open the template in the editor.
             $primerafila = 0;
         }
         echo "<br>";
-        muestraciudades($primerafila,2);
+        $filaspagina = 2;
+        $totalfilas = muestraciudades($primerafila,$filaspagina);
+        $filaanterior = $primerafila - $filaspagina;
+        $filasiguiente = $primerafila + $filaspagina;
+        echo "<br>";
+        echo "<a href='index.php?primerafila=".$filaanterior."'>anterior</a>";
+        echo "<br>";
+        echo "<a href='index.php?primerafila=".$filasiguiente."'>siguiente</a>";
 
         ?>
     </body>
