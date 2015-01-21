@@ -56,7 +56,7 @@ and open the template in the editor.
         $filaanterior = $primerafila - $filaspagina;
         $filasiguiente = $primerafila + $filaspagina;
         echo "<br>";
-        echo "<a href='index.php?primerafila=".$filaanterior."'>anterior</a>";
+        echo "<a href='index.php?primerafila=".$filaanterior."><button disabled='disabled'>anterior</button></a>";
         echo "<br>";
         echo "<a href='index.php?primerafila=".$filasiguiente."'>siguiente</a>";
 
